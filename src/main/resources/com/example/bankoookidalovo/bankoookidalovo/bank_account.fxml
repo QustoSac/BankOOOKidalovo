@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:controller="com.example.bankoookidalovo.bankoookidalovo.BankAccountController"
+          xmlns:fx="http://javafx.com/fxml" alignment="CENTER"
+          hgap="10" vgap="8">
+  <padding>
+    <Insets top="10" right="10" bottom="10" left="10"/>
+  </padding>
+
+  <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+  <TextField fx:id="idField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+  <Label text="Баланс:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+  <TextField fx:id="balanceField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Годовая процентная ставка (%):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+  <TextField fx:id="interestField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+  <Label text="Сумма:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+  <TextField fx:id="amountField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+  <Button text="Депозит" onAction="#handleDeposit" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+  <Button text="Вывод" onAction="#handleWithdraw" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+  <Button text="Рассчитать ежемесячные проценты" onAction="#handleCalculateInterest" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+
+  <Label fx:id="resultLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+</GridPane>
