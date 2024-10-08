@@ -41,9 +41,10 @@ public class BankAccountController {
 
     @FXML
     private void handleCalculateInterest() {
-        double interestRate = Double.parseDouble(interestField.getText());
-        account.setAnnualInterestRate(interestRate);
         double interest = account.getMonthlyInterest();
-        resultLabel.setText("Ежемесячные проценты: " + interest);
+        String interestOutput = String.format("%.2f", interest);
+        resultLabel.setText("Ежемесячные проценты: " + interestOutput);
+        balanceField.setText(String.valueOf(account.getBalance()));
+        interestField.setText(String.valueOf(account.getAnnualInterestRate()));
     }
 }
