@@ -7,10 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Account {
-    private int id = 0;
+    private int id;
     private String name;
-    private double balance = 0.0;
-    private double annualInterestRate = 7.5;  // 7.5% as per the task
+    private double balance;
+    private double annualInterestRate;
     private Date dateCreated;
     private List<String> transactions = new ArrayList<>();
 
