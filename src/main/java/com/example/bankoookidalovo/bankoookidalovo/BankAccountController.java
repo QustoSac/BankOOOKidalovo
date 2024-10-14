@@ -21,13 +21,14 @@ public class BankAccountController {
     @FXML
     private Label resultLabel;
 
-    private Account account = new Account(1, 0.0);
+    private Account account = new Account(1233, "Семен", 1100.0);
 
     @FXML
     private void handleDeposit() {
         double amount = Double.parseDouble(amountField.getText());
         account.deposit(amount);
         balanceField.setText(String.valueOf(account.getBalance()));
+        resultLabel.setText("Транзакции: \n" + String.join("\n", account.getTransactions()));
     }
 
     @FXML
@@ -35,6 +36,7 @@ public class BankAccountController {
         double amount = Double.parseDouble(amountField.getText());
         account.withdraw(amount);
         balanceField.setText(String.valueOf(account.getBalance()));
+        resultLabel.setText("Транзакции: \n" + String.join("\n", account.getTransactions()));
     }
 
     @FXML
@@ -42,6 +44,6 @@ public class BankAccountController {
         double interestRate = Double.parseDouble(interestField.getText());
         account.setAnnualInterestRate(interestRate);
         double interest = account.getMonthlyInterest();
-        resultLabel.setText("Monthly Interest: " + interest);
+        resultLabel.setText("Ежемесячные проценты: " + interest);
     }
 }

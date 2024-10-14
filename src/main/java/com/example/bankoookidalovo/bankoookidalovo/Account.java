@@ -2,20 +2,25 @@ package com.example.bankoookidalovo.bankoookidalovo;
 
 import javafx.scene.control.Alert;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Account {
     private int id = 0;
+    private String name;
     private double balance = 0.0;
-    private double annualInterestRate = 0.0;
+    private double annualInterestRate = 7.5;  // 7.5% as per the task
     private Date dateCreated;
+    private List<String> transactions = new ArrayList<>();
 
     public Account() {
-        this.dateCreated = new Date(); 
+        this.dateCreated = new Date();
     }
 
-    public Account(int id, double balance) {
+    public Account(int id, String name, double balance) {
         this.id = id;
+        this.name = name;
         this.balance = balance;
         this.dateCreated = new Date();
     }
@@ -28,8 +33,20 @@ public class Account {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getBalance() {
         return balance;
+    }
+
+    public void setAnnualInterestRate(double annualInterestRate) {
+        this.annualInterestRate = annualInterestRate;
     }
 
     public void setBalance(double balance) {
@@ -38,10 +55,6 @@ public class Account {
 
     public double getAnnualInterestRate() {
         return annualInterestRate;
-    }
-
-    public void setAnnualInterestRate(double annualInterestRate) {
-        this.annualInterestRate = annualInterestRate;
     }
 
     public Date getDateCreated() {
@@ -55,6 +68,7 @@ public class Account {
     public void withdraw(double amount) {
         if (amount <= balance) {
             balance -= amount;
+            transactions.add("Снято: " + amount + " | Баланс: " + balance);
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Недостаточно средств");
@@ -66,5 +80,13 @@ public class Account {
 
     public void deposit(double amount) {
         balance += amount;
+        transactions.add("Внесено: " + amount + " | Баланс: " + balance);
+    }
+
+    public List<String> getTransactions() {
+        return transactions;
     }
 }
+
+
+
