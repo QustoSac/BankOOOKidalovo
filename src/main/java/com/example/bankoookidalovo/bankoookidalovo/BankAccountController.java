@@ -136,7 +136,6 @@ public class BankAccountController {
     private void handleCreateUser() {
         String name = nameField.getText();
         int id = Integer.parseInt(idField.getText());
-
         try (Connection conn = DatabaseConnection.connect()) {
             String sql = "INSERT INTO accounts (id, name, balance, annual_interest_rate) VALUES (?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
