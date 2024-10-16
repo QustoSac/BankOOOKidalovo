@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 public class BankAccountController {
 
@@ -125,17 +126,44 @@ public class BankAccountController {
 
     @FXML
     private void handleCalculateInterest() {
-        double interest = account.getMonthlyInterest();
-        String interestOutput = String.format("%.2f", interest);
-        resultLabel.setText("Ежемесячные проценты: " + interestOutput);
-        balanceField.setText(String.valueOf(account.getBalance()));
-        interestField.setText(String.valueOf(account.getAnnualInterestRate()));
+        int id = Integer.parseInt(idField.getText());
+        try (Connection conn = DatabaseConnection.connect()) {
+            String checkBalanceSql = "SELECT balance FROM accounts WHERE id = ?";
+            double currentBalance = 0;
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkBalanceSql)) {
+                checkStmt.setInt(1, id);
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next()) {
+                    currentBalance = rs.getDouble("balance");
+                }
+            }
+            String checkInterestSql = "SELECT annual_interest_rate FROM accounts WHERE id = ?";
+            double currentInterest = 0;
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkInterestSql)){
+                checkStmt.setInt(1, id);
+                ResultSet rs = checkStmt.executeQuery();
+                if(rs.next()){
+                    currentInterest = rs.getDouble("annual_interest_rate");
+                }
+            }
+            double everyMonthProcent = currentBalance * (currentInterest / 100) / 12;
+            String interestOutput = String.format("%.2f", everyMonthProcent);
+            resultLabel.setText("Ежемесячные проценты: " + interestOutput);
+            balanceField.setText(String.valueOf(currentBalance));
+            interestField.setText(String.valueOf(currentInterest));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            resultLabel.setText("Ошибка при выводе средств");
+        }
+
     }
 
     @FXML
     private void handleCreateUser() {
         String name = nameField.getText();
         int id = Integer.parseInt(idField.getText());
+
         try (Connection conn = DatabaseConnection.connect()) {
             String sql = "INSERT INTO accounts (id, name, balance, annual_interest_rate) VALUES (?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
